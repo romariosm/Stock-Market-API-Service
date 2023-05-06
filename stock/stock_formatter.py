@@ -28,7 +28,7 @@ class StockFormatter:
             return float(current_stock["4. close"]) - float(previous_stock["4. close"])
         except Exception as e:
             current_app.logger.error(
-                "There was an error calculating net change. Error={e}"
+                f"There was an error calculating net change. Error={e}"
             )
         return 0
 
@@ -37,7 +37,7 @@ class StockFormatter:
             return self.__results["Meta Data"].get("2. Symbol")
         except Exception as e:
             current_app.logger.error(
-                "There was an error extracting stock symbol. Error={e}"
+                f"There was an error extracting stock symbol. Error={e}"
             )
         return None
 
