@@ -5,6 +5,7 @@ on:
       - main
 env:
   AWS_LIGHTSAIL_SERVICE_NAME: aws-lightsail-stock-api
+  AWS_REGION: us-east-2
 jobs:
   deploy:
     name: Build and deploy
@@ -28,7 +29,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Build Docker Image
@@ -37,7 +38,7 @@ jobs:
         run: |
           service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
           aws lightsail push-container-image \
-            --region ${{ secrets.AWS_REGION }} \
+            --region ${{ env.AWS_REGION }} \
             --service-name ${service_name} \
             --label ${service_name} \
             --image ${service_name}:release
