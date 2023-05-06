@@ -2,7 +2,7 @@ name: Build and deploy Docker app to Lightsail
 on:
   push:
     branches:
-      - master
+      - main
 env:
   AWS_LIGHTSAIL_SERVICE_NAME: aws-lightsail-stock-api
 jobs:
