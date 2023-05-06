@@ -8,6 +8,7 @@ from stock.stock_formatter import StockFormatter
 
 
 api = Blueprint("stock", __name__)
+STOCK_FRECUENCY = "TIME_SERIES_DAILY_ADJUSTED"
 
 
 @api.route("/auth", methods=["POST"])
@@ -42,7 +43,7 @@ def get_stock_info():
     if not stock_validator.is_valid():
         return Response("symbol parameter is required", 400)
     result = stock_api.execute(
-        function="TIME_SERIES_DAILY_ADJUSTED",
+        function=STOCK_FRECUENCY,
         apikey=current_app.config["STOCK_API"],
         symbol=data["symbol"],
     )
