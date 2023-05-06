@@ -1,6 +1,6 @@
 {
     "containers": {
-        "stockApi": {
+        "stockapi": {
             "image": "",
             "ports": {
                 "3000": "HTTP"
@@ -8,7 +8,7 @@
         }
     },
     "publicEndpoint": {
-        "containerName": "stockApi",
+        "containerName": "stockapi",
         "containerPort": 3000,
         "healthCheck": {
             "healthyThreshold": 2,
