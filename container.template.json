@@ -4,6 +4,11 @@
             "image": "",
             "ports": {
                 "3000": "HTTP"
+            },
+            "environment": {
+                "CONFIGURATION_SETUP": "",
+                "STOCK_API": "",
+                "SECRET_KEY": ""
             }
         }
     },
