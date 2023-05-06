@@ -19,7 +19,7 @@ class StockFormatter:
             }
         except Exception as e:
             current_app.logger.error(
-                "There was an error getting stock response. Error={e}"
+                f"There was an error getting stock response. Error={e}"
             )
         return {}
 
