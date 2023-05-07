@@ -39,7 +39,7 @@ jobs:
         run: |
           service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
           configsetup=${{ env.CONFIGURATION_SETUP }}
-          stockapikey=${{ env.STOCK_API }}
+          stockapikey=X86NOH6II01P7R24
           secretkey=${{ env.SECRET_KEY }}
           aws lightsail push-container-image \
             --region ${{ env.AWS_REGION }} \
