@@ -9,6 +9,9 @@ class StockFormatter:
     def get_response(self) -> dict:
         last_stock = self.extract_stock(date.today())
         day_before_stock = self.extract_stock(date.today() - timedelta(days=1))
+        if not last_stock:
+            last_stock = self.extract_stock(date.today() - timedelta(days=1))
+            day_before_stock = self.extract_stock(date.today() - timedelta(days=2))
         try:
             return {
                 "symbol": self.get_symbol(),
