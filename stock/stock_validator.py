@@ -11,14 +11,14 @@ class StockCompany(Enum):
     AMAZON = "AMZN"
 
     @classmethod
-    def has_value(cls, value):
+    def has_value(cls, value:str) -> bool:
         return value in [v.value for v in cls.__members__.values()]
 
 
 class StockInfoValidator(DataValidator):
     symbol = StringField(name="symbol", required=True)
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         if StockCompany.has_value(self.symbol.get_value()):
             return super().is_valid()
         self.set_validation_message(f"{self.symbol.get_value()} is not allowed")

@@ -17,19 +17,19 @@ class DataValidator:
             and not (a.startswith("__") and a.endswith("__"))
         ]
 
-    def __set_field_value(self):
+    def __set_field_value(self) -> None:
         for field in self.__attrs:
             if field.get_name() in self.__data.keys():
                 field.set_value(self.__data[field.get_name()])
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         for field in self.__attrs:
             if not field.is_valid():
                 return False
         return True
 
-    def set_validation_message(self, message):
+    def set_validation_message(self, message: str) -> None:
         self.__validation_message = message
 
-    def get_validation_message(self):
+    def get_validation_message(self) -> str:
         return self.__validation_message

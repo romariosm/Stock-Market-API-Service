@@ -17,11 +17,11 @@ class Service:
     service definition class
     """
 
-    def __init__(self, name, base_url):
+    def __init__(self, name: str, base_url: str):
         self.__name = name
         self.__base_url = base_url
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.__base_url
 
 
@@ -30,7 +30,7 @@ class ServiceAPI:
     API service consumer
     """
 
-    def __init__(self, name, service, method, params, http_headers):
+    def __init__(self, name: str, service: Service, method: str, params: list, http_headers: list) -> None:
         self.__name = name
         self.__service = service
         self.__method = method
@@ -45,7 +45,7 @@ class ServiceAPI:
             if not param.is_valid(kwargs.get(param.get_name)):
                 raise Exception("{} type is not valid".format(param))
 
-    def execute(self, **kwargs):
+    def execute(self, **kwargs) -> dict:
         """
         Executes service to retrieve data
         """
@@ -57,8 +57,6 @@ class ServiceAPI:
                 headers=self.__http_headers,
             )
 
-        # if 'application/xml' in response.__dict__['headers']['Content-Type']:
-        #    return json.loads(json.dumps(xmltodict.parse(response.content)))
         if "application/json" in response.__dict__["headers"]["Content-Type"]:
             return response.json()
         return response

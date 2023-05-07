@@ -48,11 +48,11 @@ class StockFormatter:
             )
         return None
 
-    def load_stock_date(self):
+    def load_stock_date(self) -> dict:
         stocks = {}
         for k, v in self.__results["Time Series (Daily)"].items():
             stocks[date.fromisoformat(k)] = v
         return stocks
 
-    def order_by_date(self, stocks):
+    def order_by_date(self, stocks: dict) -> list:
         return sorted(stocks)
