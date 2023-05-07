@@ -31,7 +31,7 @@ dictConfig(
 
 def create_app():
     app = Flask(__name__)
-    environment_configuration = os.environ["CONFIGURATION_SETUP"]
+    environment_configuration = os.environ.get("CONFIGURATION_SETUP", 'config.DevelopmentConfig')
     app.config.from_object(environment_configuration)
     jwt = JWTManager(app)
 

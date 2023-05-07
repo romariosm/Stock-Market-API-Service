@@ -38,14 +38,11 @@ jobs:
       - name: Push and Deploy
         run: |
           service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
-          configsetup=${{ env.CONFIGURATION_SETUP }}
-          stockapikey=X86NOH6II01P7R24
-          secretkey=${{ env.SECRET_KEY }}
           aws lightsail push-container-image \
             --region ${{ env.AWS_REGION }} \
             --service-name ${service_name} \
             --label ${service_name} \
             --image ${service_name}:release
           aws lightsail get-container-images --service-name ${service_name} | jq --raw-output ".containerImages[0].image" > image.txt
-          jq --arg image $(cat image.txt) --arg configsetup "${configsetup}" --arg stockapikey "${stockapikey}" --arg secretkey "${secretkey}" '.containers.stockapi.image = $image | .containers.stockapi.environment.CONFIGURATION_SETUP = $configsetup | .containers.stockapi.environment.STOCK_API = $stockapikey | .containers.stockapi.environment.SECRET_KEY = $secretkey' container.template.json > container.json
+          jq --arg image $(cat image.txt) --arg configsetup "${{ env.CONFIGURATION_SETUP }}" --arg stockapikey "${{ env.STOCK_API }}" --arg secretkey "${{ env.SECRET_KEY }}" '.containers.stockapi.image = $image | .containers.stockapi.environment.CONFIGURATION_SETUP = $configsetup | .containers.stockapi.environment.STOCK_API = $stockapikey | .containers.stockapi.environment.SECRET_KEY = $secretkey' container.template.json > container.json
           aws lightsail create-container-service-deployment --service-name ${service_name} --cli-input-json file://$(pwd)/container.json
