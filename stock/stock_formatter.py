@@ -7,11 +7,15 @@ class StockFormatter:
         self.__results = results
 
     def get_response(self) -> dict:
-        last_stock = self.extract_stock(date.today())
-        day_before_stock = self.extract_stock(date.today() - timedelta(days=1))
-        if not last_stock:
-            last_stock = self.extract_stock(date.today() - timedelta(days=1))
-            day_before_stock = self.extract_stock(date.today() - timedelta(days=2))
+        stocks_loaded = self.load_stock_date()
+        stock_ordered_by_date = self.order_by_date(stocks_loaded)
+        if not len(stock_ordered_by_date) > 1:
+            current_app.logger.warning(
+                f"There were not enough stock dates to calculate net change"
+            )
+            return {}
+        last_stock = stocks_loaded[stock_ordered_by_date[0]]
+        day_before_stock = stocks_loaded[stock_ordered_by_date[1]]
         try:
             return {
                 "symbol": self.get_symbol(),
@@ -44,11 +48,11 @@ class StockFormatter:
             )
         return None
 
-    def extract_stock(self, stock_date: date) -> dict:
-        try:
-            return self.__results["Time Series (Daily)"].get(stock_date.isoformat())
-        except Exception as e:
-            current_app.logger.error(
-                f"It could not be possible to extract stock info date={stock_date.isoformat()} Error={e}"
-            )
-        return {}
+    def load_stock_date(self):
+        stocks = {}
+        for k, v in self.__results["Time Series (Daily)"].items():
+            stocks[date.fromisoformat(k)] = v
+        return stocks
+
+    def order_by_date(self, stocks):
+        return sorted(stocks)
