@@ -36,7 +36,7 @@ def auth_user():
 @api.route("/stock_info", methods=["GET"])
 @jwt_required()
 def get_stock_info():
-    """Sign up user to get access token"""
+    """Return stock info"""
 
     data = dict(request.args)
     stock_validator = StockInfoValidator(data)
